@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'liveinternet_ru_stat'
-  s.version     = '0.1.0'
-  s.date        = '2013-06-17'
+  s.version     = '0.1.1'
+  s.date        = '2013-08-20'
   s.summary     = 'liveinternet.ru stat wrapper'
   s.description = "Wrappers for liveinternet.ru stat service"
   s.authors     = ["Eugeniy Belyaev"]

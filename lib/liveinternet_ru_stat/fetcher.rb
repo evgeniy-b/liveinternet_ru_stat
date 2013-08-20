@@ -26,7 +26,13 @@ module LiveinternetRuStatFetcher
   def get(path)
     response = client.get mkpath(path), headers
     @referer = mkpath(path)
-    response
+    
+    #follow redirects
+    if '302' == response.code
+      get response['location']
+    else
+      response
+    end
   end
 
 

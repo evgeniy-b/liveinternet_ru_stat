@@ -14,9 +14,11 @@ class LiveinternetRuStat
   end
 
   def authenticate(password)
+    @cookie = ''
+
     resp = get '/'
     rnd = resp.body.split('name=rnd value="').last.split('"').first
-    @cookie = resp.response['set-cookie'].split('; ')[0]
+    @cookie = resp.response['set-cookie'].split('; ')[0] if resp.response['set-cookie']
 
     resp = post '/', rnd: rnd,
                      need_password: "yes",
@@ -26,6 +28,11 @@ class LiveinternetRuStat
     if '302' == resp.code
       @cookie += '; ' + resp.response['set-cookie'].split('; ')[0]
       get resp.response['location']
+
+      # check mirrors
+      if !@referer[site] && @referer =~ /\/stat\/([^\/]+)\//
+        @site = $1
+      end
 
     else
       raise 'liveinternet.ru/stat authentication failed'
